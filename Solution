@@ -1,0 +1,63 @@
+public class Solution {
+    static int uniquepath =0;
+    
+    public static void main(String[] args)
+    {
+    	System.out.println(uniquePathsDP(10,60));
+    }
+    public static int uniquePaths(int m, int n) {
+        Move(0,0,m-1,n-1);
+        
+        return uniquepath;
+    }
+    
+    public static int uniquePathsDP(int m, int n)
+    {
+    	
+        if(m==0 || n==0) return 0;
+       if(m==1 || n==1) return 1;
+    
+       int[][] dp = new int[m][n];
+    
+       //left column
+       for(int i=0; i<m; i++){
+           dp[i][0] = 1;
+       }
+    
+       //top row
+       for(int j=0; j<n; j++){
+           dp[0][j] = 1;
+       }
+    
+       //fill up the dp table
+       for(int i=1; i<m; i++){
+           for(int j=1; j<n; j++){
+               dp[i][j] = dp[i-1][j] + dp[i][j-1];
+           }
+       }
+    
+       return dp[m-1][n-1];
+    }
+    
+    public static int Move(int m, int n, int goalM, int goalN)
+    {
+        if( m == goalM && n == goalN)
+        {
+            uniquepath++;
+            return 0;
+        }
+        else if ( m > goalM || n > goalN)
+        {
+            return 0;
+        }
+        // downside move
+        
+        Move(m+1,n,goalM,goalN);
+        
+        // rightside move
+        
+        Move(m,n+1,goalM,goalN);
+        
+        return 0;
+    }
+}
